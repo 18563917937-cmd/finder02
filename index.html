@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Finder 3.0 · 身心调节助手</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: radial-gradient(ellipse at 50% 30%, #1a1a2e 0%, #000 70%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,122,255,0.15) 0%, transparent 70%);
+    top: 10%; left: 50%; transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .hero-logo {
+    width: 96px; height: 96px;
+    background: #007AFF;
+    border-radius: 28px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(0,122,255,0.4);
+    margin-bottom: 32px;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #fff 0%, #8E8E93 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .tagline {
+    font-size: clamp(17px, 2.5vw, 21px);
+    color: #8E8E93;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  .hero-chip {
+    padding: 6px 14px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    font-size: 13px;
+    color: #AEAEB2;
+    border: 0.5px solid rgba(255,255,255,0.1);
+  }
+
+  /* ========== PHONE MOCK ========== */
+  .phones-section {
+    padding: 120px 24px;
+    background: #000;
+  }
+  .section-title {
+    text-align: center;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: #8E8E93;
+    font-size: 17px;
+    margin-bottom: 80px;
+  }
+  .phones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+    gap: 64px;
+    max-width: 1600px;
+    margin: 0 auto;
+    justify-items: center;
+  }
+
+  .phone {
+    width: 375px;
+    height: 812px;
+    background: #000;
+    border-radius: 54px;
+    padding: 14px;
+    box-shadow:
+      0 0 0 2px #2a2a2a,
+      0 30px 80px rgba(0,0,0,0.8),
+      0 0 60px rgba(0,122,255,0.08);
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .phone:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 0 0 2px #3a3a3a,
+      0 40px 100px rgba(0,0,0,0.9),
+      0 0 80px rgba(0,122,255,0.15);
+  }
+  .phone-notch {
+    position: absolute;
+    top: 14px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 36px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    border-radius: 42px;
+    overflow: hidden;
+    position: relative;
+    background: #F2F2F7;
+  }
+  .phone-label {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #8E8E93;
+    font-weight: 500;
+  }
+
+  /* ========== iOS SCREEN STYLES ========== */
+  .bg-grouped { background: #F2F2F7; }
+  .ios-label { color: #000; }
+  .ios-sec-label { color: #3C3C43; }
+  .ios-ter-label { color: #3C3C4399; }
+  .ios-quat-label { color: #3C3C434D; }
+  .ios-blue { color: #007AFF; }
+  .ios-blue-bg { background: #007AFF; }
+  .ios-blue-soft { background: #007AFF1A; }
+  .ios-green { color: #34C759; }
+  .ios-green-bg { background: #34C759; }
+  .ios-green-soft { background: #34C7591A; }
+  .ios-orange { color: #FF9500; }
+  .ios-orange-soft { background: #FF95001A; }
+  .ios-red { color: #FF3B30; }
+  .ios-red-soft { background: #FF3B301A; }
+  .ios-gray-bg { background: #E5E5EA; }
+  .ios-gray-soft { background: #F2F2F7; }
+  .ios-gray-1 { color: #8E8E93; }
+  .ios-gray-5 { background: #F2F2F7; }
+  .ios-sep { border-color: #3C3C432E; }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  }
+
+  .ios-btn-primary {
+    padding: 14px 0;
+    background: #007AFF;
+    color: #fff;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+  }
+  .ios-btn-secondary {
+    padding: 14px 0;
+    background: #E5E5EA;
+    color: #007AFF;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+  }
+  .ios-btn-tertiary {
+    color: #007AFF;
+    font-size: 17px;
+    font-weight: 500;
+    border: none;
+    background: none;
+  }
+
+  .ios-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .ios-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    background: #fff;
+  }
+  .ios-row-icon {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-right: 12px; flex-shrink: 0;
+  }
+  .ios-row-group {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .ios-row-group .ios-row + .ios-row {
+    border-top: 0.5px solid #3C3C432E;
+  }
+
+  .ios-page-header {
+    padding: 56px 20px 12px;
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(20px);
+    background: rgba(242,242,247,0.9);
+    border-bottom: 0.5px solid #3C3C431A;
+  }
+  .ios-large-title {
+    font-size: 34px; font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .ios-title-2 {
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .ios-headline { font-size: 17px; font-weight: 600; line-height: 1.3; }
+  .ios-body { font-size: 17px; line-height: 1.47; }
+  .ios-subhead { font-size: 15px; line-height: 1.4; }
+  .ios-footnote { font-size: 13px; line-height: 1.38; }
+  .ios-caption { font-size: 12px; line-height: 1.33; }
+
+  .ios-progress-bar {
+    height: 4px;
+    background: #E5E5EA;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  .ios-progress-fill {
+    height: 100%;
+    background: #007AFF;
+    border-radius: 9999px;
+  }
+
+  .ios-option {
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .ios-tab-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(24px) saturate(1.5);
+    border-top: 0.5px solid rgba(60,60,67,0.3);
+    padding: 6px 8px calc(env(safe-area-inset-bottom, 0px) + 8px);
+    display: flex;
+    justify-content: space-around;
+    z-index: 50;
+  }
+  .ios-tab-item {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4px 14px;
+    border-radius: 10px;
+  }
+  .ios-tab-active { color: #007AFF; }
+  .ios-tab-inactive { color: #8E8E93; }
+
+  /* Safe area bottom bar */
+  .home-indicator {
+    position: absolute;
+    bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 134px; height: 5px;
+    background: #000;
+    border-radius: 3px;
+    z-index: 200;
+  }
+
+  /* ========== SCREEN 1: WELCOME ========== */
+  .screen-welcome {
+    width: 100%; height: 100%;
+    background: #F2F2F7;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px 32px;
+  }
+  .screen-welcome .app-icon {
+    width: 80px; height: 80px;
+    background: #007AFF;
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,122,255,0.3);
+    margin-bottom: 40px;
+  }
+  .screen-welcome h1 {
+    font-size: 34px; font-weight: 700;
+    color: #000; text-align: center;
+    margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .screen-welcome .sub {
+    font-size: 17px; color: #3C3C43;
+    text-align: center; margin-bottom: 80px;
+  }
+  .screen-welcome .btn { width: 100%; max-width: 280px; }
+  .screen-welcome .hint {
+    font-size: 13px; color: #3C3C4399;
+    margin-top: 40px; text-align: center;
+  }
+
+  /* ========== SCREEN 2: QUESTIONNAIRE ========== */
+  .screen-questionnaire {
+    width: 100%; height: 100%;
+    background: #F2F2F7;
+    display: flex; flex-direction: column;
+    padding-top: 56px;
+  }
+  .qq-header {
+    padding: 10px 20px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .qq-progress { padding: 8px 20px; }
+  .qq-body {
+    flex: 1; padding: 12px 20px 0;
+    overflow: hidden;
+  }
+  .qq-foot {
+    padding: 12px 20px 80px;
+    display: flex; gap: 12px;
+  }
+
+  /* ========== SCREEN 3: RESULT ========== */
+  .screen-result {
+    width: 100%; height: 100%;
+    background: #F2F2F7;
+    padding: 72px 20px 24px;
+    display: flex; flex-direction: column;
+  }
+  .result-title-area { text-align: center; margin-bottom: 32px; }
+
+  /* ========== SCREEN 4: CHAT ========== */
+  .screen-chat {
+    width: 100%; height: 100%;
+    background: #F2F2F7;
+    display: flex; flex-direction: column;
+  }
+  .chat-header {
+    padding: 56px 20px 12px;
+    background: rgba(242,242,247,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid #3C3C431A;
+  }
+  .chat-body {
+    flex: 1; padding: 16px 20px 180px;
+    overflow: hidden;
+  }
+  .chat-input-area {
+    position: absolute;
+    bottom: 80px; left: 12px; right: 12px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border: 0.5px solid #3C3C431A;
+  }
+
+  /* ========== SCREEN 5: TREND ========== */
+  .screen-trend {
+    width: 100%; height: 100%;
+    background: #F2F2F7;
+    display: flex; flex-direction: column;
+  }
+  .trend-header {
+    padding: 56px 20px 12px;
+    background: rgba(242,242,247,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid #3C3C431A;
+  }
+  .trend-body {
+    flex: 1; padding: 12px 20px 80px;
+    overflow-y: auto;
+  }
+  .trend-body::-webkit-scrollbar { display: none; }
+
+  /* ========== SCREEN 6: PROFILE ========== */
+  .screen-profile {
+    width: 100%; height: 100%;
+    background: #F2F2F7;
+    display: flex; flex-direction: column;
+  }
+  .profile-header {
+    padding: 56px 20px 12px;
+    background: rgba(242,242,247,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid #3C3C431A;
+  }
+  .profile-body {
+    flex: 1; padding: 8px 20px 80px;
+    overflow-y: auto;
+  }
+  .profile-body::-webkit-scrollbar { display: none; }
+
+  .section-label {
+    font-size: 13px;
+    color: #3C3C4399;
+    text-transform: uppercase;
+    padding: 0 4px 6px;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+  }
+
+  /* ========== FEATURES ========== */
+  .features-section {
+    padding: 120px 24px;
+    background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 64px;
+  }
+  .feature-card {
+    padding: 32px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 20px;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    transition: all 0.3s;
+  }
+  .feature-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(0,122,255,0.3);
+    transform: translateY(-2px);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+  .feature-card h3 {
+    font-size: 17px; font-weight: 600; color: #fff;
+    margin-bottom: 8px; letter-spacing: -0.01em;
+  }
+  .feature-card p {
+    font-size: 15px; color: #8E8E93; line-height: 1.5;
+  }
+
+  /* ========== PHILOSOPHY ========== */
+  .philosophy {
+    padding: 100px 24px;
+    background: #000;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .philosophy h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    background: linear-gradient(180deg, #fff 0%, #8E8E93 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .philosophy p {
+    font-size: 17px; color: #8E8E93; line-height: 1.7;
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    padding: 48px 24px;
+    background: #000;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+  .footer .brand {
+    font-size: 15px; color: #8E8E93; margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .footer .copyright {
+    font-size: 12px; color: #3C3C43;
+  }
+
+  /* ========== ANIMATIONS ========== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 480px) {
+    .phone {
+      width: 320px; height: 694px;
+      border-radius: 46px; padding: 12px;
+    }
+    .phone-notch { width: 100px; height: 30px; }
+    .phone-screen { border-radius: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-logo reveal">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.41 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.59 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  </div>
+  <h1 class="reveal">Finder 3.0</h1>
+  <p class="tagline reveal">身心调节助手 · 温柔陪伴，用心呵护</p>
+  <div class="hero-meta reveal">
+    <span class="hero-chip">🫀 中医九种体质</span>
+    <span class="hero-chip">🤖 AI 个性化建议</span>
+    <span class="hero-chip">📈 趋势洞察</span>
+    <span class="hero-chip">🔒 本地存储</span>
+  </div>
+</section>
+
+<!-- ============ PHONE MOCKUPS ============ -->
+<section class="phones-section">
+  <h2 class="section-title reveal">一个完整的身心调节体验</h2>
+  <p class="section-subtitle reveal">从了解自己，到照顾自己</p>
+
+  <div class="phones-grid">
+
+    <!-- SCREEN 1: WELCOME -->
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-welcome">
+            <div class="app-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.41 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.59 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <h1>身心调节助手</h1>
+            <p class="sub">温柔陪伴，用心呵护</p>
+            <button class="ios-btn-primary btn">进行体质测试</button>
+            <p class="hint">首次使用约需 1 分钟</p>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+      <p class="phone-label">欢迎页</p>
+    </div>
+
+    <!-- SCREEN 2: QUESTIONNAIRE -->
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-questionnaire">
+            <div class="qq-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              <span style="font-size:15px; font-weight:500; color:#3C3C43;">3 / 10</span>
+              <div style="width:20px;"></div>
+            </div>
+            <div class="qq-progress">
+              <div class="ios-progress-bar">
+                <div class="ios-progress-fill" style="width:30%"></div>
+              </div>
+            </div>
+            <div class="qq-body">
+              <p class="ios-caption ios-ter-label" style="margin-bottom:12px;">问题 3</p>
+              <h2 class="ios-title-2 ios-label" style="margin-bottom:28px;">你平时是否容易肩颈发紧，或者不自觉一直绷着身体？</h2>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <div class="ios-option" style="background:#fff; border-color:#3C3C432E; color:#000;">几乎没有</div>
+                <div class="ios-option" style="background:#007AFF; color:#fff;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span>偶尔有</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  </div>
+                </div>
+                <div class="ios-option" style="background:#fff; border-color:#3C3C432E; color:#000;">经常有</div>
+                <div class="ios-option" style="background:#fff; border-color:#3C3C432E; color:#000;">非常明显</div>
+              </div>
+            </div>
+            <div class="qq-foot">
+              <div class="ios-btn-secondary" style="flex:0.4;">上一题</div>
+              <div class="ios-btn-primary" style="flex:1;">下一题</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+      <p class="phone-label">体质测试</p>
+    </div>
+
+    <!-- SCREEN 3: RESULT -->
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-result">
+            <div class="result-title-area">
+              <p class="ios-caption ios-ter-label" style="margin-bottom:8px;">你的基础体质倾向</p>
+              <h1 class="ios-large-title ios-label">气虚质</h1>
+            </div>
+            <div class="card" style="padding:24px; margin-bottom:20px;">
+              <div class="ios-row-icon ios-blue-soft" style="width:48px; height:48px; margin-bottom:16px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#007AFF"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.41 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.59 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <p class="ios-body ios-sec-label" style="line-height:1.6;">
+                你容易感到疲劳，精力恢复较慢，平时安静沉稳，说话声音较低。建议日常注意劳逸结合，避免过度劳累。
+              </p>
+            </div>
+            <div class="card" style="padding:20px; margin-bottom:24px;">
+              <div style="display:flex; gap:12px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2" style="flex-shrink:0; margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <p class="ios-subhead ios-sec-label" style="line-height:1.55;">
+                  后续 AI 会结合你的基础体质和当前状态，给出更贴近你的小建议。
+                </p>
+              </div>
+            </div>
+            <div style="margin-top:auto;">
+              <button class="ios-btn-primary">开始今天的对话</button>
+            </div>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+      <p class="phone-label">测试结果</p>
+    </div>
+
+    <!-- SCREEN 4: CHAT -->
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-chat">
+            <div class="chat-header">
+              <h1 class="ios-large-title ios-label">下午好</h1>
+              <div style="margin-top:8px; display:inline-block; padding:4px 10px; background:#007AFF1A; border-radius:9999px;">
+                <span class="ios-caption ios-blue">体质倾向：气虚质</span>
+              </div>
+              <p class="ios-footnote ios-sec-label" style="margin-top:6px;">说说现在的感觉，我给你一个适合的小建议</p>
+            </div>
+            <div class="chat-body">
+              <div class="card" style="padding:20px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <div style="width:24px; height:24px; border-radius:50%; background:#007AFF1A; display:flex; align-items:center; justify-content:center;">
+                      <svg width="12" height="12" viewBox="0 0 20 20" fill="#007AFF"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <span class="ios-headline ios-label">给你的建议</span>
+                  </div>
+                  <span class="ios-caption ios-blue">重说</span>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
+                  <span class="ios-chip ios-blue-soft ios-blue">疲劳</span>
+                  <span class="ios-chip ios-blue-soft ios-blue">肩颈紧张</span>
+                  <span class="ios-chip ios-orange-soft ios-orange">烦躁</span>
+                </div>
+                <div style="background:#F2F2F7; border-radius:12px; padding:16px; margin-bottom:12px;">
+                  <p class="ios-body ios-label" style="line-height:1.55;">今天开了很久会，感觉肩膀很紧，脑子也转不动了</p>
+                </div>
+                <div style="background:#007AFF1A; border-radius:12px; padding:16px; margin-bottom:8px;">
+                  <p class="ios-body ios-blue" style="line-height:1.55;">建议你先站起来，做 3 组"肩颈释放"：双肩向后画大圆 5 次，然后双手交叉举过头顶向上伸展，保持 5 秒。每组之间深呼吸两次。</p>
+                </div>
+                <p class="ios-subhead ios-ter-label" style="text-align:center; font-style:italic;">累了就歇一歇，没有什么比你的状态更重要。</p>
+              </div>
+              <div class="card" style="padding:16px;">
+                <p class="ios-caption ios-ter-label" style="text-align:center; margin-bottom:12px;">这个建议适合你吗？</p>
+                <div style="display:flex; gap:8px; justify-content:center;">
+                  <div style="padding:8px 16px; border-radius:9999px; background:#34C759; color:#fff; font-size:13px; font-weight:500;">有帮助</div>
+                  <div style="padding:8px 16px; border-radius:9999px; background:#F2F2F7; color:#3C3C43; font-size:13px; font-weight:500;">一般</div>
+                  <div style="padding:8px 16px; border-radius:9999px; background:#F2F2F7; color:#3C3C43; font-size:13px; font-weight:500;">不太适合</div>
+                </div>
+              </div>
+            </div>
+            <div class="chat-input-area">
+              <div style="display:flex; gap:8px; align-items:flex-end;">
+                <textarea style="flex:1; min-height:44px; max-height:80px; padding:10px 12px; background:#F2F2F7; border-radius:10px; border:none; font-size:16px; resize:none; outline:none;" placeholder="比如：今天开了很久会，肩膀很紧…"></textarea>
+                <div style="padding:10px 16px; background:#007AFF; color:#fff; border-radius:10px; font-size:15px; font-weight:500; flex-shrink:0;">获取</div>
+              </div>
+            </div>
+            <div class="ios-tab-bar">
+              <div class="ios-tab-item ios-tab-active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span style="font-size:10px; margin-top:2px;">对话</span>
+              </div>
+              <div class="ios-tab-item ios-tab-inactive">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span style="font-size:10px; margin-top:2px;">趋势</span>
+              </div>
+              <div class="ios-tab-item ios-tab-inactive">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span style="font-size:10px; margin-top:2px;">我的</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+      <p class="phone-label">AI 对话</p>
+    </div>
+
+    <!-- SCREEN 5: TREND -->
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-trend">
+            <div class="trend-header">
+              <h1 class="ios-large-title ios-label">趋势</h1>
+              <p class="ios-footnote ios-sec-label" style="margin-top:6px;">这里会记录你最近的感受和更适合你的建议方向</p>
+            </div>
+            <div class="trend-body">
+              <!-- keywords -->
+              <div class="card" style="padding:20px; margin-bottom:12px;">
+                <p class="ios-caption ios-ter-label" style="margin-bottom:12px;">最近 7 天高频感受词</p>
+                <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                  <span class="ios-chip ios-blue-soft ios-blue">疲劳</span>
+                  <span class="ios-chip ios-blue-soft ios-blue">肩颈紧张</span>
+                  <span class="ios-chip ios-blue-soft ios-blue">烦躁</span>
+                  <span class="ios-chip ios-blue-soft ios-blue">入睡困难</span>
+                  <span class="ios-chip ios-blue-soft ios-blue">注意力分散</span>
+                </div>
+              </div>
+
+              <!-- direction insight -->
+              <div class="card" style="padding:20px; margin-bottom:12px;">
+                <p class="ios-caption ios-ter-label" style="margin-bottom:12px;">近期更适合你的建议方向</p>
+                <div style="background:#007AFF1A; border-radius:12px; padding:14px; margin-bottom:12px;">
+                  <p class="ios-subhead ios-blue" style="line-height:1.5;">最近你更容易接受呼吸放松和身体活动类建议</p>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                  <span class="ios-chip ios-gray-soft ios-label">呼吸放松</span>
+                  <span class="ios-chip ios-gray-soft ios-label">身体活动</span>
+                </div>
+              </div>
+
+              <!-- feedback bars -->
+              <div class="card" style="padding:20px; margin-bottom:12px;">
+                <p class="ios-caption ios-ter-label" style="margin-bottom:16px;">最近 7 天建议反馈分布</p>
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                  <span style="font-size:15px; color:#3C3C43; flex-shrink:0; width:64px;">有帮助</span>
+                  <div style="flex:1; height:8px; background:#F2F2F7; border-radius:9999px; overflow:hidden;">
+                    <div style="width:70%; height:100%; background:#34C759; border-radius:9999px;"></div>
+                  </div>
+                  <span style="font-size:15px; font-weight:500; color:#000; width:16px; text-align:right;">7</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                  <span style="font-size:15px; color:#3C3C43; flex-shrink:0; width:64px;">一般</span>
+                  <div style="flex:1; height:8px; background:#F2F2F7; border-radius:9999px; overflow:hidden;">
+                    <div style="width:20%; height:100%; background:#FF9500; border-radius:9999px;"></div>
+                  </div>
+                  <span style="font-size:15px; font-weight:500; color:#000; width:16px; text-align:right;">2</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <span style="font-size:15px; color:#3C3C43; flex-shrink:0; width:64px;">不太适合</span>
+                  <div style="flex:1; height:8px; background:#F2F2F7; border-radius:9999px; overflow:hidden;">
+                    <div style="width:10%; height:100%; background:#8E8E93; border-radius:9999px;"></div>
+                  </div>
+                  <span style="font-size:15px; font-weight:500; color:#000; width:16px; text-align:right;">1</span>
+                </div>
+              </div>
+
+              <!-- stats -->
+              <div class="card" style="padding:20px;">
+                <p class="ios-caption ios-ter-label" style="margin-bottom:16px;">最近状态</p>
+                <div style="display:flex; gap:12px;">
+                  <div style="flex:1; text-align:center; padding:16px; background:#F2F2F7; border-radius:12px;">
+                    <p style="font-size:28px; font-weight:600; color:#007AFF; line-height:1; margin-bottom:6px;">10</p>
+                    <p class="ios-caption ios-ter-label">记录次数</p>
+                  </div>
+                  <div style="flex:1; text-align:center; padding:16px; background:#F2F2F7; border-radius:12px;">
+                    <p style="font-size:28px; font-weight:600; color:#007AFF; line-height:1; margin-bottom:6px;">5</p>
+                    <p class="ios-caption ios-ter-label">连续天数</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ios-tab-bar">
+              <div class="ios-tab-item ios-tab-inactive">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span style="font-size:10px; margin-top:2px;">对话</span>
+              </div>
+              <div class="ios-tab-item ios-tab-active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span style="font-size:10px; margin-top:2px;">趋势</span>
+              </div>
+              <div class="ios-tab-item ios-tab-inactive">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span style="font-size:10px; margin-top:2px;">我的</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+      <p class="phone-label">趋势洞察</p>
+    </div>
+
+    <!-- SCREEN 6: PROFILE -->
+    <div class="reveal">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="screen-profile">
+            <div class="profile-header">
+              <h1 class="ios-large-title ios-label">我的</h1>
+              <p class="ios-footnote ios-sec-label" style="margin-top:6px;">欢迎回来</p>
+            </div>
+            <div class="profile-body">
+              <!-- 体质档案 -->
+              <p class="section-label">体质档案</p>
+              <div class="ios-row-group" style="margin-bottom:24px;">
+                <div class="ios-row">
+                  <div class="ios-row-icon ios-blue-soft">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="display:flex; justify-content:space-between; gap:12px;">
+                      <span style="font-size:17px; color:#000;">基础体质</span>
+                      <span style="font-size:15px; color:#3C3C43; font-weight:500;">气虚质</span>
+                    </div>
+                    <p class="ios-caption ios-ter-label" style="margin-top:4px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">容易疲劳，精力恢复较慢，说话声音较低，安静沉稳。</p>
+                    <p class="ios-caption ios-quat-label" style="margin-top:4px;">测试时间 · 2026年10月15日</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 数据概览 -->
+              <p class="section-label">数据概览</p>
+              <div class="ios-row-group" style="margin-bottom:24px;">
+                <div class="ios-row">
+                  <div class="ios-row-icon ios-green-soft">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34C759" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  </div>
+                  <span style="font-size:17px; color:#000; flex:1;">对话记录</span>
+                  <span style="font-size:15px; color:#3C3C43; font-weight:500;">10 条</span>
+                </div>
+              </div>
+
+              <!-- 操作 -->
+              <p class="section-label">操作</p>
+              <div class="ios-row-group" style="margin-bottom:24px;">
+                <div class="ios-row">
+                  <div class="ios-row-icon ios-blue-soft">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  </div>
+                  <span style="font-size:17px; color:#000; flex:1;">重新测试基础体质</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AEAEB2" stroke-width="2.5"><polyline points="9 5 16 12 9 19"/></svg>
+                </div>
+              </div>
+
+              <!-- 数据管理 -->
+              <p class="section-label">数据管理</p>
+              <div class="ios-row-group" style="margin-bottom:24px;">
+                <div class="ios-row">
+                  <div class="ios-row-icon ios-orange-soft">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </div>
+                  <span style="font-size:17px; color:#000; flex:1;">清空对话记录</span>
+                  <span class="ios-caption ios-ter-label">仅记录</span>
+                </div>
+                <div class="ios-row">
+                  <div class="ios-row-icon ios-red-soft">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF3B30" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  </div>
+                  <span style="font-size:17px; color:#FF3B30; flex:1;">清空全部数据</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AEAEB2" stroke-width="2.5"><polyline points="9 5 16 12 9 19"/></svg>
+                </div>
+              </div>
+
+              <!-- 关于 -->
+              <p class="section-label">关于</p>
+              <div class="ios-row-group">
+                <div style="padding:16px; background:#F2F2F7;">
+                  <p class="ios-caption ios-sec-label" style="line-height:1.6;">
+                    本产品提供基于当前输入和基础体质的轻量生活方式建议，不构成医疗诊断。
+                  </p>
+                  <p class="ios-caption ios-sec-label" style="line-height:1.6; margin-top:8px;">
+                    如果你正在经历持续严重的不适，请优先寻求专业帮助。
+                  </p>
+                </div>
+              </div>
+              <p class="ios-footnote ios-quat-label" style="text-align:center; margin-top:12px;">版本 1.0.0</p>
+            </div>
+            <div class="ios-tab-bar">
+              <div class="ios-tab-item ios-tab-inactive">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span style="font-size:10px; margin-top:2px;">对话</span>
+              </div>
+              <div class="ios-tab-item ios-tab-inactive">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span style="font-size:10px; margin-top:2px;">趋势</span>
+              </div>
+              <div class="ios-tab-item ios-tab-active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span style="font-size:10px; margin-top:2px;">我的</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+      <p class="phone-label">我的</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="features-section">
+  <h2 class="section-title reveal">为身心而设计</h2>
+  <p class="section-subtitle reveal">每一个细节，都为了让你更容易照顾好自己</p>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon" style="background:#007AFF1A;">🫀</div>
+      <h3>中医九种体质</h3>
+      <p>10 题快速识别你的基础体质，气虚、阳虚、阴虚、痰湿……不同体质，不同建议。</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon" style="background:#34C7591A;">🤖</div>
+      <h3>AI 个性化建议</h3>
+      <p>结合你的体质和当下状态，给出 30 秒到 3 分钟可执行的小建议，不说教、不鸡汤。</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon" style="background:#FF95001A;">📈</div>
+      <h3>趋势洞察</h3>
+      <p>记录每次对话，自动归纳高频感受词和更适合你的建议方向，看见自己的状态变化。</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon" style="background:#AF52DE1A;">🎯</div>
+      <h3>偏好学习</h3>
+      <p>你的每一次反馈都在帮 AI 更懂你，越用越贴合你的节奏和喜好。</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon" style="background:#FF3B301A;">🔒</div>
+      <h3>本地存储</h3>
+      <p>所有数据保存在你的设备上，不上传云端。安心记录，无需顾虑。</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon" style="background:#5AC8FA1A;">🍎</div>
+      <h3>Apple 设计</h3>
+      <p>遵循 Apple Human Interface Guidelines，熟悉的 iOS 交互，开箱即用。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHILOSOPHY ============ -->
+<section class="philosophy reveal">
+  <h2>轻量，温和，陪伴</h2>
+  <p>
+    Finder 3.0 不做医疗诊断，不做心理治疗，不说教，不夸大。<br/><br/>
+    它只是一个安静的小工具，在你需要的时候，帮你理一理此刻的状态，
+    给一个低门槛的小建议——呼吸几次，站起来走两步，喝口水，歇一歇。<br/><br/>
+    照顾自己，不需要太多。
+  </p>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <p class="brand">Finder 3.0 · 身心调节助手</p>
+  <p class="copyright">© 2026 Finder · 仅作生活方式参考，不构成医疗建议</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
